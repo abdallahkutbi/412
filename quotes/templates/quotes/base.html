@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+<head>
+    <title>{% block title %}Master Yoda Quotes{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+
+<body>
+        <header>
+            <h1>{% block header %}Master Yoda Quote of the Day{% endblock %}</h1>
+        </header>
+
+        <nav>
+           <li><a href="{% url 'quotes' %}">Quote of the Day</a></li>
+            <li><a href="{% url 'show_all' %}">Show All</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+        </nav>
+
+
+
+
+        <main>
+            {% block content %}
+            <h1>Welcome to the Quote App</h1>
+            <p>This is the home page of the Quote App.</p>  
+            {% endblock %}
+        </main>
+</body>
+</html>
+
+
+

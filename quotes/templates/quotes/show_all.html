@@ -1,0 +1,32 @@
+<!--
+    `show_all.html` : show all of the quotes and images, in a neatly formatted page.
+
+    Note: this HTML template will need to use a loop to process the list of quotes,
+    and another loop to process the list of images. 
+-->
+{% extends "quotes/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="grid-container">
+        <h1>All Quotes by Master Yoda</h1>
+        <div class="quotes-list">
+            <ul>
+                {% for quote in all_quotes %}
+                    <blockquote>
+                        {{ quote }}
+                    </blockquote>   
+                {% endfor %}
+            </ul>
+        </div>
+
+        <h1>All Images of Master Yoda</h1>
+        <div class="images-list">
+            <li>
+                {% for image in all_images %}
+                    <li><img src="{% static image %}" alt="Master Yoda"></li>
+                {% endfor %}
+            </li>
+        </div>
+    </div>
+{% endblock %}  

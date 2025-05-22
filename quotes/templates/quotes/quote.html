@@ -1,0 +1,20 @@
+{% extends "quotes/base.html" %}
+{% load static %}
+
+{% block title %}Random Yoda Quote{% endblock %}
+
+{% block content %}
+    <div class="grid-container">
+        <div class="quote-container">
+            <h2>Today's Yoda Quote:</h2>
+            <blockquote>
+                {{ random_quote }}
+            </blockquote>
+        </div>
+
+        <div class="image-container">
+            <h2>Today's Yoda Image:</h2>
+            <img src="{% static random_image %}" alt="Master Yoda" class="yoda-image">
+        </div>
+    </div>
+{% endblock %}
