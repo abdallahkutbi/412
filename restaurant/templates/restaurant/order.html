@@ -1,0 +1,50 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+
+{% block title %}Order Food{% endblock %}
+
+{% block content %}
+<div class="order-container">
+<h1>Place Your Order</h1>
+
+<form action="{% url 'confirmation' %}" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Menu</legend>
+        {% for item, price in menu %}
+        <label>
+            <input type="checkbox" name="items" value="{{ item|lower }}">
+            {{ item }} - ${{ price }}
+        </label><br>
+        {% endfor %}
+    </fieldset>
+
+    <fieldset>
+        <legend>Daily Special</legend>
+        <label>
+            <input type="checkbox" name="items" value="{{ special.0|lower }}">
+            {{ special.0 }} - ${{ special.1 }}
+        </label><br>
+        <input type="hidden" name="special_name" value="{{ special.0 }}">
+        <input type="hidden" name="special_price" value="{{ special.1 }}">
+    </fieldset>
+
+    <fieldset>
+        <legend>Burger Toppings&nbsp;$1 each</legend>
+        <label><input type="checkbox" name="burger_toppings" value="Cheese">Cheese</label><br>
+        <label><input type="checkbox" name="burger_toppings" value="Lettuce">Lettuce</label><br>
+        <label><input type="checkbox" name="burger_toppings" value="Tomato">Tomato</label><br>
+        <label><input type="checkbox" name="burger_toppings" value="Pickles">Pickles</label><br>
+    </fieldset>
+    <textarea name="instructions" placeholder="Special instructions"></textarea>
+
+    <fieldset>
+        <legend>Your Info</legend>
+        <input type="text"     name="name"  placeholder="Name"  required><br>
+        <input type="tel"      name="phone" placeholder="Phone" required><br>
+        <input type="email"    name="email" placeholder="Email" required><br>
+    </fieldset>
+
+    <button type="submit">Submit Order</button>
+</form>
+{% endblock %}

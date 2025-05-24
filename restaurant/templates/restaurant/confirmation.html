@@ -1,0 +1,45 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+
+{% block title %}Order Confirmation{% endblock %}
+
+{% block content %}
+    <div class="grid-container">
+        <div class="confirmation-box">
+            <h1>Order Confirmation</h1>
+            
+            <div class="thank-you">
+                <h3>Thank you for your order, {{ customer_name }}!</h3>
+            </div>
+
+            <div class="order-details">
+                <h3>Order Summary:</h3>
+                <ul class="items-list">
+                    {% for item in items %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="total">
+                    <strong>Total: ${{ total|floatformat:2 }}</strong>
+                </div>
+            </div>
+
+            <div class="customer-details">
+                <h3>Customer Information</h3>
+                <ul>
+                    <li><strong>Name:</strong> {{ customer_name }}</li>
+                    <li><strong>Phone:</strong> {{ customer_phone }}</li>
+                    <li><strong>Email:</strong> {{ customer_email }}</li>
+                    {% if instructions %}
+                        <li><strong>Special Instructions:</strong> {{ instructions }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="ready-time">
+                <h3>Your order will be ready at:</h3>
+                <p class="time">{{ ready_time|date:"H:i" }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

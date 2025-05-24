@@ -1,0 +1,27 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+
+{% block title %}Al-Baik{% endblock %}
+
+{% block content %}
+    <div class="grid-container">
+        <h2>Welcome to {{ restaurant_name }}</h2>
+        
+        <div class="image-container">
+            <img src="{% static 'images/albaik-2538842425.jpg' %}" alt="Al-Baik Restaurant">
+        </div>
+
+        <div class="restaurant-info">
+            <h3>Location</h3>
+            <p>{{ location }}</p>
+            
+            <h3>Hours of Operation</h3>
+            <ul style="list-style: none; padding: 0; margin: 0; text-align: center;">
+                {% for hour in hours %}
+                    <li>{{ hour }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
