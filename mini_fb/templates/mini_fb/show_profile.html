@@ -1,0 +1,18 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block title %}Profile: {{ profile.first_name }} {{ profile.last_name }}{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 20px auto; padding: 20px;">
+    {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="Profile image" style="width: 200px; height: 200px; object-fit: cover; display: block; margin: 0 auto;">
+    {% endif %}
+    
+    <h1 style="text-align: center; margin: 20px 0;">{{ profile.first_name }} {{ profile.last_name }}</h1>
+    
+    <div style="margin: 20px 0;">
+        <p><strong>City:</strong> {{ profile.city }}</p>
+        <p><strong>Email:</strong> <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
+    </div>
+</div>
+{% endblock %}

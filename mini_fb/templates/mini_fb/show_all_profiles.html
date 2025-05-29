@@ -1,0 +1,19 @@
+{% extends "mini_fb/base.html" %}
+
+{% block content %}
+<h1 >Showing all Profiles</h1>
+<div class="grid-container">
+    {% for p in profiles %}
+    <div>
+        <a href="{% url 'show_profile' p.pk %}">
+		<h2>{{p.first_name}} {{p.last_name}}</h2>
+		<h3>from {{p.city}} contact: {{p.email}}</h3>
+		<p>
+		<img src="{{p.image.url}}" alt="Profile image" class="profile-image">
+		</p>
+        </a>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

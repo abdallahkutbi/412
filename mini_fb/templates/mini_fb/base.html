@@ -1,0 +1,17 @@
+<!-- mini_fb/templates/mini_fb/base.html -->
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+
+
+<h1>Mini Facebook</h1>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
+    </ul>
+</nav>
+
+{% block content %}
+{% endblock %}
