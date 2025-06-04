@@ -1,0 +1,24 @@
+{% extends "mini_fb/base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Update Status Message</h1>
+    
+    <form method="post" class="status-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.message.id_for_label }}">Status Message:</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+                <div class="error-message">{{ form.message.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="submit-button">Update Status</button>
+            <a href="{% url 'show_profile' status_message.profile.pk %}" class="cancel-button">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

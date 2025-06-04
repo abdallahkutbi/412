@@ -5,9 +5,13 @@
 {% block content %}
 <div class="form-container">
     <h1>Create Status Message</h1>
-    <form method="post" action="{% url 'create_status' profile.pk %}">   
+    <form method="post" action="{% url 'create_status' profile.pk %}" enctype="multipart/form-data">   
         {% csrf_token %}
         {{ form.as_p }}
+        <div class="form-group">
+            <label for="files">Images:</label>
+            <input type="file" name="files" multiple />
+        </div>
         <button type="submit">Create Status Message</button>
     </form>
     <a href="{% url 'show_profile' profile.id %}">Back to Profile</a>

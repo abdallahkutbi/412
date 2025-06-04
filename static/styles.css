@@ -1,7 +1,5 @@
 /* This CSS was derived from NetNinja's multi-column grid example. */
 
-
-
 h1 {
     text-align: center;
     color: #c1f7d7;
@@ -94,18 +92,23 @@ nav li {
     }
 }
 
+    .profile-image {
+        display: flex;
+        flex-direction: column;
+
+
+    } 
+
+/* all images */
+/* change the size of the images to 50px by 50px */
 .profile-image {
-    color: #c1f7d7;
-    background-color: #02ded7;
-    border: 1px solid #ccc;
+    width: 138px;
+    height: 200px;
+    object-fit: cover;
     border-radius: 5px;
-    margin: 10px 0;
-    padding: 10px;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-} 
+}
+
+
 
 .status-message {
     text-align: center;
@@ -148,4 +151,113 @@ form {
     align-items: center;
     justify-content: center;
 }
-    
+
+.status-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.status-image {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.form-container input[type="submit"] {
+    margin-top: 10px;
+}       
+
+img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}   
+
+img.image.image_file.url {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}   
+
+.status-image {
+    max-width: 200px;   
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}   
+
+.status-image {
+    max-width: 200px;   
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}   
+
+.status-image {
+    max-width: 200px;   
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+
+.form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-message {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.delete-button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.cancel-button {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
