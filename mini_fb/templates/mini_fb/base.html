@@ -5,10 +5,15 @@
 
 <h1>Mini Facebook</h1>
 
-<nav>
-    <ul>
-        <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
+<nav class="nav-container">
+    <ul class="nav-list">
+        <li><a href="{% url 'show_all_profiles' %}">All Profiles</a></li>
         <li><a href="{% url 'create_profile' %}">Create Profile</a></li>
+        <li><a href="{% url 'news_feed' %}">News Feed</a></li>
+        {% if profile %}
+            <li><a href="{% url 'show_profile' profile.pk %}">My Profile</a></li>
+            <li><a href="{% url 'friend_suggestions' profile.pk %}">Find Friends</a></li>
+        {% endif %}
     </ul>
 </nav>
 

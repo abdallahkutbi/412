@@ -141,4 +141,13 @@ class ShowFriendSuggestionsView(DetailView):
         context = super().get_context_data(**kwargs)
         context['suggestions'] = self.object.get_friend_suggestions()
         return context
+
+class ShowNewsFeedView(ListView):
+    '''
+    View to show all status messages in the news feed
+    '''
+    model = StatusMessage
+    template_name = 'mini_fb/news_feed.html'
+    context_object_name = 'status_messages'
+    ordering = ['-timestamp']  # Most recent first
     

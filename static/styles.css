@@ -334,3 +334,95 @@ img.image.image_file.url {
 .friends-list a:hover {
     text-decoration: underline;
 }
+
+
+.news-feed-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.feed-items {
+    margin: 1rem 0;
+}
+
+.feed-item {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+}
+
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-thumbnail {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-weight: bold;
+}
+
+.profile-name a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+.timestamp {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.status-content {
+    margin-top: 1rem;
+}
+
+.status-content p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.status-image {
+    margin-top: 1rem;
+}
+
+.status-image img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.news-feed-link {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 1rem;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}

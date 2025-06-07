@@ -56,6 +56,17 @@ class Profile(models.Model):
         
         return suggestions
 
+    def get_news_feed(self):
+        """
+        Returns a QuerySet of status messages from this profile and all friends,
+        ordered by most recent first.
+        """
+        friend_profiles = self.get_friends()
+        
+        return StatusMessage.objects.filter(
+            profile__in=list(friend_profiles) + [self]
+        ).order_by('-timestamp')
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 

@@ -52,6 +52,7 @@
     <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
     <div class="profile-actions">
         <a href="{% url 'friend_suggestions' profile.pk %}" class="suggestions-link">Find Friends</a>
+        <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">View News Feed</a>
     </div>
 </div>  
 {% endblock %}
