@@ -261,3 +261,76 @@ img.image.image_file.url {
     display: inline-block;
 }
 
+.suggestions-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.suggestions-list {
+    margin: 1rem 0;
+}
+
+.suggestion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.add-friend-button {
+    background: #28a745;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.suggestions-link {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.friends-section {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.friends-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.friends-list li {
+    margin: 0.5rem 0;
+}
+
+.friends-list a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.friends-list a:hover {
+    text-decoration: underline;
+}
