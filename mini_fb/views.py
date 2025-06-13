@@ -1,3 +1,10 @@
+"""
+Views for the Mini Facebook application.
+This module contains all the view classes that handle different pages and actions
+in the Mini Facebook application, including profile views, status message views,
+and friend management views.
+"""
+
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from .models import Profile, StatusMessage, Image, StatusImage
@@ -142,12 +149,16 @@ class ShowFriendSuggestionsView(DetailView):
         context['suggestions'] = self.object.get_friend_suggestions()
         return context
 
-class ShowNewsFeedView(ListView):
+class ShowNewsFeedView(DetailView):
     '''
-    View to show all status messages in the news feed
+    View to show status messages from friends and self in the news feed
     '''
-    model = StatusMessage
+    model = Profile
     template_name = 'mini_fb/news_feed.html'
-    context_object_name = 'status_messages'
-    ordering = ['-timestamp']  # Most recent first
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['status_messages'] = self.object.get_news_feed()
+        return context
     

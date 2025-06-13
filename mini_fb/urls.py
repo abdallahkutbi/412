@@ -1,5 +1,12 @@
+"""
+URL configuration for the Mini Facebook application.
+This module defines all the URL patterns for the application, mapping URLs to their
+corresponding view functions and classes.
+"""
+
 # mini_fb/urls.py
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from .views import (
     ShowAllProfilesView, ShowProfilePageView, CreateProfileView, 
     CreateStatusMessageView, CreateImageView, UpdateProfileView, 
@@ -20,6 +27,8 @@ urlpatterns = [
     path('profile/<int:pk>/add_friend/<int:other_pk>', AddFriendView.as_view(), name='add_friend'),
     path('profile/<int:pk>/friend_suggestions', ShowFriendSuggestionsView.as_view(), name='friend_suggestions'),
     path('profile/<int:pk>/news_feed', ShowNewsFeedView.as_view(), name='news_feed'),
-    path('news_feed/', ShowNewsFeedView.as_view(), name='news_feed'),
-
+    
+    # Add these new URL patterns for authentication
+    path('login/', auth_views.LoginView.as_view(template_name='mini_fb/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='show_all_profiles'), name='logout'),
 ]

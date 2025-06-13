@@ -13,7 +13,8 @@
     <div class="profile-details">
         <p><strong>City:</strong> {{ profile.city }}</p>
         <p><strong>Email:</strong> <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
-            <div class="friends-section">
+        
+        <div class="friends-section">
             <h3>Friends:</h3>
             {% if profile.get_friends %}
                 <ul class="friends-list">
@@ -35,10 +36,12 @@
             {% for st_msg in profile.get_status_messages %}
                 <div class="status-message">
                     {{ st_msg.message }}
-                    <div class="status-actions">
-                        <a href="{% url 'delete_status' profile.pk st_msg.pk %}" class="delete-link">Delete</a>
-                        <a href="{% url 'update_status' profile.pk st_msg.pk %}" class="update-link">Update</a>
-                    </div>
+                    {% if is_owner %}
+                        <div class="status-actions">
+                            <a href="{% url 'delete_status' profile.pk st_msg.pk %}" class="delete-link">Delete</a>
+                            <a href="{% url 'update_status' profile.pk st_msg.pk %}" class="update-link">Update</a>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="status-images">
                     {% for img in st_msg.get_images %}
@@ -48,11 +51,14 @@
             {% endfor %}
         </div>
     </div>
-    <a href="{% url 'create_status' profile.pk %}" class="create-status-link">Create Status Message</a>
-    <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
-    <div class="profile-actions">
-        <a href="{% url 'friend_suggestions' profile.pk %}" class="suggestions-link">Find Friends</a>
-        <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">View News Feed</a>
-    </div>
+
+    {% if is_owner %}
+        <a href="{% url 'create_status' profile.pk %}" class="create-status-link">Create Status Message</a>
+        <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
+        <div class="profile-actions">
+            <a href="{% url 'friend_suggestions' profile.pk %}" class="suggestions-link">Find Friends</a>
+            <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">View News Feed</a>
+        </div>
+    {% endif %}
 </div>  
 {% endblock %}

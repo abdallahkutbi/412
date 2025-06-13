@@ -1,11 +1,19 @@
+"""
+Models for the Mini Facebook application.
+This module defines the database models used in the application, including
+Profile, StatusMessage, Image, StatusImage, and Friend models.
+"""
+
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Profile(models.Model):
     '''
     Profile model
     '''
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     first_name = models.TextField(blank=False)
     last_name = models.TextField(blank=False)
     city = models.TextField(blank=False)
