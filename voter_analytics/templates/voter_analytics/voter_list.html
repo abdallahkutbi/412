@@ -1,0 +1,100 @@
+<!--voter_list Page-->
+
+{% extends 'voter_analytics/base.html' %}
+{% block title %}Voter List{% endblock %}
+{% block content %}
+<h1>Voter List</h1>
+<form method="get">
+    <!-- Party -->
+    <label for="party_affiliation">Party Affiliation:</label>
+    <select name="party_affiliation" id="party_affiliation">
+        <option value="">All</option>
+        <option value="D">Democrat</option>
+        <option value="R">Republican</option>
+        <option value="I">Independent</option>
+        <option value="U">Unaffiliated</option>
+    </select>
+    <!-- Minimum Date of Birth -->
+    <label for="min_year">Minimum Date of Birth (Year):</label>
+    <select name="min_year" id="min_year">
+        <option value="">Any</option>
+        {% for year in years %}
+            <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+    </select>
+    <!-- Maximum Date of Birth -->
+    <label for="max_year">Maximum Date of Birth (Year):</label>
+    <select name="max_year" id="max_year">
+        <option value="">Any</option>
+        {% for year in years %}
+            <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+    </select>
+    <!-- Filter -->
+    <label for="voter_score">Voter Score:</label>
+    <select name="voter_score" id="voter_score">
+        <option value="">Any</option>
+        {% for score in "012345" %}
+            <option value="{{ score }}">{{ score }}</option>
+        {% endfor %}
+    </select>
+    <!-- Filter -->
+    <fieldset>
+        <legend>Voted in Specific Elections:</legend>
+        <label><input type="checkbox" name="voted_in_elections" value="v20state"> 2020 State</label>
+        <label><input type="checkbox" name="voted_in_elections" value="v21town"> 2021 Town</label>
+        <label><input type="checkbox" name="voted_in_elections" value="v21primary"> 2021 Primary</label>
+        <label><input type="checkbox" name="voted_in_elections" value="v22general"> 2022 General</label>
+        <label><input type="checkbox" name="voted_in_elections" value="v23town"> 2023 Town</label>
+    </fieldset>
+    <button type="submit">Filter</button>
+</form>
+<!--Table -->
+ <table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Street Address</th>
+            <th>Apartment Number</th>
+            <th>Zip Code</th>
+            <th>Date of Birth</th>
+            <th>Date of Registration</th>
+            <th>Party Affiliation</th>
+            <th>Precinct Number</th>
+            <th>2020 State</th>
+            <th>2021 Town</th>
+            <th>2021 Primary</th>
+            <th>2022 General</th>
+            <th>2023 Town</th>
+            <th>Voter Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for voter in voters %}
+        <tr>
+            <td><a href="{% url 'voter_detail' voter.id %}">{{ voter.first_name }}</a></td>
+            <td>{{ voter.last_name }}</td>
+            <td>{{ voter.street_number }} {{ voter.street_name }}</td>
+            <td>{{ voter.apartment_number }}</td>
+            <td>{{ voter.zip_code }}</td>
+            <td>{{ voter.date_of_birth }}</td>
+            <td>{{ voter.date_of_registration }}</td>
+            <td>{{ voter.party_affiliation }}</td>
+            <td>{{ voter.precinct_number }}</td>
+            <td>{{ voter.v20state }}</td>
+            <td>{{ voter.v21town }}</td>
+            <td>{{ voter.v21primary }}</td>
+            <td>{{ voter.v22general }}</td>
+            <td>{{ voter.v23town }}</td>
+            <td>{{ voter.voter_score }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="15">No voters found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+    {% endblock %}

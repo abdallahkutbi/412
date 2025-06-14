@@ -1,0 +1,26 @@
+<!--Base Page with header and navigation-->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Voters{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Voter Analytics</h1>
+    </header>
+    <nav>
+        <a href="{% url 'voters' %}">Home</a>
+        <a href="{% url 'graphs' %}">Graphs</a>
+    </nav>
+    <hr>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

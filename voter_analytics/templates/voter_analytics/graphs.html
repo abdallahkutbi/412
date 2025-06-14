@@ -1,0 +1,58 @@
+<!--graphs Page-->
+
+{% extends 'voter_analytics/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Voter Graphs</h1>
+
+<!-- Filter form -->
+<form method="get">
+    <label for="party">Party Affiliation:</label>
+    <select name="party" id="party">
+        <option value="">--Select--</option>
+        <option value="D">Democratic</option>
+        <option value="R">Republican</option>
+        <option value="U">Unenrolled</option>
+        <option value="L">Libertarian</option>
+    </select>
+
+    <label for="min_dob">Min Date of Birth:</label>
+    <input type="date" name="min_dob" id="min_dob">
+
+    <label for="max_dob">Max Date of Birth:</label>
+    <input type="date" name="max_dob" id="max_dob">
+
+    <label for="voter_score">Voter Score:</label>
+    <select name="voter_score" id="voter_score">
+        <option value="">--Select--</option>
+        {% for score in "012345"|make_list %}
+        <option value="{{ score }}">{{ score }}</option>
+        {% endfor %}
+    </select>
+
+    <label><input type="checkbox" name="v20state" value="TRUE"> Voted in 2020 State</label>
+    <label><input type="checkbox" name="v21town" value="TRUE"> Voted in 2021 Town</label>
+    <label><input type="checkbox" name="v21primary" value="TRUE"> Voted in 2021 Primary</label>
+    <label><input type="checkbox" name="v22general" value="TRUE"> Voted in 2022 General</label>
+    <label><input type="checkbox" name="v23town" value="TRUE"> Voted in 2023 Town</label>
+
+    <button type="submit">Filter</button>
+</form>
+
+<!-- Display the graphs -->
+<div>
+    <h2>Birth Year Distribution</h2>
+    {{ birth_year_chart|safe }}
+</div>
+
+<div>
+    <h2>Party Affiliation Distribution</h2>
+    {{ party_chart|safe }}
+</div>
+
+<div>
+    <h2>Voter Participation by Election</h2>
+    {{ election_chart|safe }}
+</div>
+
+{% endblock %}
