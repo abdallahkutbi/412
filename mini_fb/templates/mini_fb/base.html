@@ -35,14 +35,6 @@
     {% block content %}{% endblock %}
 </main>
 
-{% if user.is_authenticated and profile.user == user %}
-    <div class="profile-actions">
-        <a href="{% url 'create_status' profile.id %}" class="create-status-link">Create Status Message</a>
-        <a href="{% url 'update_profile' %}" class="update-profile-link">Update Profile</a>
-        <a href="{% url 'friend_suggestions' profile.id %}" class="suggestions-link">Find Friends</a>
-        <a href="{% url 'news_feed' profile.id %}" class="news-feed-link">View News Feed</a>
-    </div>
-{% endif %}
 
 </body>
 </html>

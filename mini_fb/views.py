@@ -12,6 +12,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CreateProfileForm, CreateStatusMessageForm, CreateImageForm, UpdateProfileForm
 from django.urls import reverse
 from django.views.generic import TemplateView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 class ShowAllProfilesView(ListView):
@@ -40,13 +42,28 @@ class ShowProfilePageView(DetailView):
 
 
 class CreateProfileView(CreateView):
-    '''
-    View to create a new profile
-    '''
     model = Profile
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
     context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['user_form'] = UserCreationForm(self.request.POST)
+        else:
+            context['user_form'] = UserCreationForm()
+        return context
+
+    def form_valid(self, form):
+        user_form = UserCreationForm(self.request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            login(self.request, user)
+            form.instance.user = user
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, user_form=user_form))
 
 class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     '''
