@@ -13,7 +13,7 @@ class Profile(models.Model):
     '''
     Profile model
     '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile', null=True)
     first_name = models.TextField(blank=False)
     last_name = models.TextField(blank=False)
     city = models.TextField(blank=False)

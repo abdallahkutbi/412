@@ -1,11 +1,13 @@
-{% extends 'mini_fb/base.html' %}
+<!-- show_profile.html-->
+{% extends "mini_fb/base.html" %}
+{% load static %}
 
 {% block title %}Profile: {{ profile.first_name }} {{ profile.last_name }}{% endblock %}
 
 {% block content %}
 <div class="profile-container">
-    {% if profile.image_url %}
-        <img src="{{ profile.image_url }}" alt="{{ profile.image_url }}" class="profile-image">
+    {% if profile.profile_image_url %}
+        <img src="{% static profile.profile_image_url %}" alt="{{ profile.first_name }}'s profile picture" class="profile-image">
     {% endif %}
     
     <h1 class="profile-header">{{ profile.first_name }} {{ profile.last_name }}</h1>
@@ -16,9 +18,9 @@
         
         <div class="friends-section">
             <h3>Friends:</h3>
-            {% if profile.get_friends %}
+            {% if friends %}
                 <ul class="friends-list">
-                    {% for friend in profile.get_friends %}
+                    {% for friend in friends %}
                         <li>
                             <a href="{% url 'show_profile' friend.pk %}">
                                 {{ friend.first_name }} {{ friend.last_name }}
@@ -33,32 +35,40 @@
         
         <div class="status-messages">
             <h3>Status Messages:</h3>
-            {% for st_msg in profile.get_status_messages %}
+            {% for status in profile.get_status_messages %}
                 <div class="status-message">
-                    {{ st_msg.message }}
-                    {% if is_owner %}
+                    {{ status.message }}
+                    {% if user.is_authenticated and profile.user == user %}
                         <div class="status-actions">
-                            <a href="{% url 'delete_status' profile.pk st_msg.pk %}" class="delete-link">Delete</a>
-                            <a href="{% url 'update_status' profile.pk st_msg.pk %}" class="update-link">Update</a>
+                            <a href="{% url 'delete_status' status.pk %}" class="delete-link">Delete</a>
+                            <a href="{% url 'update_status' status.pk %}" class="update-link">Update</a>
                         </div>
                     {% endif %}
                 </div>
                 <div class="status-images">
-                    {% for img in st_msg.get_images %}
-                        <img src="{{ img.image.image_file.url }}" alt="{{ img.image.image_file.url }}" class="status-image">
-                    {% endfor %}
+                    {% with status.statusimage_set.all as images %}
+                        {% if images %}
+                            {% for si in images %}
+                                <img src="{{ si.image.image_file.url }}" alt="{{ si.image.caption }}" class="status-image">
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </div>
+            {% empty %}
+                <p>No status messages yet.</p>
             {% endfor %}
         </div>
     </div>
 
-    {% if is_owner %}
-        <a href="{% url 'create_status' profile.pk %}" class="create-status-link">Create Status Message</a>
-        <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
+    {% if user.is_authenticated and profile.user == user %}
         <div class="profile-actions">
+            <a href="{% url 'create_status' %}" class="create-status-link">Create Status Message</a>
+            <a href="{% url 'update_profile' %}" class="update-profile-link">Update Profile</a>
             <a href="{% url 'friend_suggestions' profile.pk %}" class="suggestions-link">Find Friends</a>
             <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">View News Feed</a>
         </div>
     {% endif %}
-</div>  
+</div>
 {% endblock %}
+
+

@@ -1,3 +1,4 @@
+<!-- friend_suggestions.html-->
 {% extends "mini_fb/base.html" %}
 
 {% block content %}
@@ -12,9 +13,7 @@
                         <h3>{{ suggestion.first_name }} {{ suggestion.last_name }}</h3>
                         <p>From: {{ suggestion.city }}</p>
                     </div>
-                    <a href="{% url 'add_friend' profile.pk suggestion.pk %}" class="add-friend-button">
-                        Add Friend
-                    </a>
+                    <a href="{% url 'add_friend' profile.pk suggestion.pk %}" class="add-friend-button">Add Friend</a>
                 </div>
             {% endfor %}
         </div>
