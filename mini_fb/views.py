@@ -77,7 +77,7 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('profile', kwargs=self.kwargs)
+        return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
     
     def get_login_url(self):
         return reverse('login')

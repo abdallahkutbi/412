@@ -23,7 +23,7 @@ urlpatterns = [
     path('profile/news_feed/<int:pk>/', ShowNewsFeedView.as_view(), name='news_feed'),
     path('profile/<int:pk>/add_friend/<int:other_pk>/', AddFriendView.as_view(), name='add_friend'),
     path('profile/friend_suggestions/<int:pk>/', ShowFriendSuggestionsView.as_view(), name='friend_suggestions'),
-    path('status/create_status/', CreateStatusMessageView.as_view(), name='create_status'),
+    path('status/create_status/<int:pk>/', CreateStatusMessageView.as_view(), name='create_status'),
     path('profile/my/', ShowMyProfileView.as_view(), name='my_profile'),
     path('status/<int:pk>/delete/', DeleteStatusMessageView.as_view(), name='delete_status'),
     path('status/<int:pk>/update/', UpdateStatusMessageView.as_view(), name='update_status'),
@@ -33,5 +33,6 @@ urlpatterns = [
         next_page='show_all_profiles'
     ), name='logout'),
     path('logout_confirmation/', LogoutConfirmationView.as_view(), name='logout_confirmation'),
+    
 
 ]

@@ -23,20 +23,26 @@
     {% endif %}
 </header>
 
-<nav class="nav-container py-2">
+<nav class="nav-container">
     <a href="{% url 'show_all_profiles' %}" class="nav-button">All Profiles</a>
-    <a href="{% url 'create_profile' %}"   class="nav-button">Create Profile</a>
-
+    <a href="{% url 'create_profile' %}" class="nav-button">Create Profile</a>
     {% if user.is_authenticated and user.profile %}
-        <a href="{% url 'show_profile' user.profile.pk %}" class="nav-button">
-            My Profile
-        </a>
+        <a href="{% url 'my_profile' %}" class="nav-button">My Profile</a>
     {% endif %}
 </nav>
 
 <main class="container mt-4">
     {% block content %}{% endblock %}
 </main>
+
+{% if user.is_authenticated and profile.user == user %}
+    <div class="profile-actions">
+        <a href="{% url 'create_status' profile.id %}" class="create-status-link">Create Status Message</a>
+        <a href="{% url 'update_profile' %}" class="update-profile-link">Update Profile</a>
+        <a href="{% url 'friend_suggestions' profile.id %}" class="suggestions-link">Find Friends</a>
+        <a href="{% url 'news_feed' profile.id %}" class="news-feed-link">View News Feed</a>
+    </div>
+{% endif %}
 
 </body>
 </html>
