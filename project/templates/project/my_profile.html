@@ -1,0 +1,53 @@
+{% extends 'project/base.html' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+{% if profile %}
+<div class="card">
+    <h1>My Profile</h1>
+    
+    <div class="profile-header">
+        {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="profile-image">
+        {% endif %}
+        <div>
+            <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+            <p>{{ profile.city }}</p>
+            {% if profile.bio %}
+                <p>{{ profile.bio }}</p>
+            {% endif %}
+            <a href="#" class="btn">Edit Profile</a>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>My Outfits ({{ profile.get_outfits.count }})</h2>
+    <a href="{% url 'project:create_outfit' %}" class="btn">Create New Outfit</a>
+    
+    <div class="outfit-grid">
+        {% for outfit in profile.get_outfits %}
+        <div class="outfit-card">
+            {% if outfit.items.first %}
+                <img src="{{ outfit.items.first.image.url }}" alt="{{ outfit.subject }}" class="outfit-image">
+            {% endif %}
+            <div class="outfit-content">
+                <h3>{{ outfit.subject }}</h3>
+                <p><strong>Total: ${{ outfit.total_price }}</strong></p>
+                <a href="{{ outfit.get_absolute_url }}" class="btn">View Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No outfits yet. Create your first one!</p>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <h1>Profile Not Found</h1>
+    <p>You need to create a profile first.</p>
+    <a href="{% url 'project:create_profile' %}" class="btn">Create Profile</a>
+</div>
+{% endif %}
+{% endblock %} 

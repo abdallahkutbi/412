@@ -1,0 +1,12 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Logged Out{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Successfully Logged Out</h1>
+    <p>You have been successfully logged out of Community Closet.</p>
+    <a href="{% url 'project:login' %}" class="btn">Login Again</a>
+    <a href="{% url 'project:home' %}" class="btn btn-secondary">Go to Home</a>
+</div>
+{% endblock %}

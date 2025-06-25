@@ -1,0 +1,28 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Create New Outfit{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Create a New Outfit</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_subject">Outfit Name:</label>
+            {{ form.subject }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_items">Select Clothing Items:</label>
+            {{ form.items }}
+            <small>Hold Ctrl/Cmd to select multiple items</small>
+        </div>
+        
+        <button type="submit" class="btn">Create Outfit</button>
+    </form>
+    
+    <p><a href="{% url 'project:home' %}" class="btn btn-secondary">Back to Home</a></p>
+</div>
+{% endblock %}

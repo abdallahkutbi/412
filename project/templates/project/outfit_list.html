@@ -1,0 +1,31 @@
+{% extends 'project/base.html' %}
+
+{% block title %}All Outfits{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Discover Outfits</h1>
+    
+    {% if outfits %}
+        <div class="outfit-grid">
+            {% for outfit in outfits %}
+            <div class="outfit-card">
+                <div class="outfit-content">
+                    <h3><a href="{% url 'project:outfit_detail' outfit.pk %}">{{ outfit.subject }}</a></h3>
+                    <p><strong>Created by:</strong> {{ outfit.profile.first_name }} {{ outfit.profile.last_name }}</p>
+                    <p><strong>Total Price:</strong> ${{ outfit.total_price }}</p>
+                    <p><strong>Items:</strong> {{ outfit.items.count }} pieces</p>
+                    <small>{{ outfit.timestamp|date:"M d, Y" }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No outfits available yet. Be the first to create one!</p>
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'project:create_outfit' %}" class="btn">Create New Outfit</a></p>
+    {% endif %}
+</div>
+{% endblock %}

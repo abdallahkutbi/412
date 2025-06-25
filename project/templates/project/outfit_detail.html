@@ -1,0 +1,43 @@
+{% extends 'project/base.html' %}
+
+{% block title %}{{ outfit.subject }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ outfit.subject }}</h1>
+    
+    <div class="profile-header">
+        <p><strong>Created by:</strong> 
+            <a href="{% url 'project:profile_detail' outfit.profile.pk %}">
+                {{ outfit.profile.first_name }} {{ outfit.profile.last_name }}
+            </a>
+        </p>
+        <p><strong>Posted:</strong> {{ outfit.timestamp|date:"F d, Y" }}</p>
+        <p><strong>Total Price:</strong> ${{ outfit.total_price }}</p>
+    </div>
+    
+    <h3>Clothing Items in this Outfit:</h3>
+    {% if outfit.items.all %}
+        <div class="item-grid">
+            {% for item in outfit.items.all %}
+            <div class="item-card">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-image">
+                {% endif %}
+                <h4>{{ item.name }}</h4>
+                <p><strong>Type:</strong> {{ item.get_item_type_display }}</p>
+                <p><strong>Price:</strong> ${{ item.price }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No clothing items added to this outfit yet.</p>
+    {% endif %}
+    
+    {% if user.is_authenticated and user.project_profile != outfit.profile %}
+        <p><a href="{% url 'project:add_friend' outfit.profile.pk %}" class="btn">Add {{ outfit.profile.first_name }} as Friend</a></p>
+    {% endif %}
+</div>
+
+<p><a href="{% url 'project:outfit_list' %}" class="btn btn-secondary">Back to Outfits</a></p>
+{% endblock %}

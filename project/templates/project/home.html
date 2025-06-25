@@ -1,0 +1,38 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Community Closet - Home{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Welcome to Community Closet</h1>
+    <p>Discover and share amazing fashion outfits with your community!</p>
+    
+    {% if user.is_authenticated %}
+        <div class="btn-group">
+            <a href="{% url 'project:create_outfit' %}" class="btn">Create New Outfit</a>
+            <a href="{% url 'project:news_feed' %}" class="btn">View News Feed</a>
+        </div>
+    {% else %}
+        <p><a href="{% url 'login' %}" class="btn">Login to Start Sharing</a></p>
+    {% endif %}
+</div>
+
+{% if recent_outfits %}
+<div class="card">
+    <h2>Recent Outfits</h2>
+    <div class="outfit-grid">
+        {% for outfit in recent_outfits %}
+        <div class="outfit-card">
+            <div class="outfit-content">
+                <h3><a href="{% url 'project:outfit_detail' outfit.pk %}">{{ outfit.subject }}</a></h3>
+                <p><strong>Created by:</strong> {{ outfit.profile.first_name }} {{ outfit.profile.last_name }}</p>
+                <p><strong>Total Price:</strong> ${{ outfit.total_price }}</p>
+                <p><strong>Items:</strong> {{ outfit.items.count }} pieces</p>
+                <small>{{ outfit.timestamp|date:"M d, Y" }}</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

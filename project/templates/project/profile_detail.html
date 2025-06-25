@@ -1,0 +1,40 @@
+{% extends 'project/base.html' %}
+
+{% block title %}{{ profile.first_name }} {{ profile.last_name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="profile-header">
+        {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="profile-image">
+        {% endif %}
+        <div>
+            <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
+            <p>{{ profile.city }}</p>
+            {% if profile.bio %}
+                <p>{{ profile.bio }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Outfits by {{ profile.first_name }} ({{ profile.get_outfits.count }})</h2>
+    <div class="outfit-grid">
+        {% for outfit in profile.get_outfits %}
+        <div class="outfit-card">
+            {% if outfit.items.first %}
+                <img src="{{ outfit.items.first.image.url }}" alt="{{ outfit.subject }}" class="outfit-image">
+            {% endif %}
+            <div class="outfit-content">
+                <h3>{{ outfit.subject }}</h3>
+                <p><strong>Total: ${{ outfit.total_price }}</strong></p>
+                <a href="{{ outfit.get_absolute_url }}" class="btn">View Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No outfits yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

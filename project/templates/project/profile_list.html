@@ -1,0 +1,29 @@
+{% extends 'project/base.html' %}
+
+{% block title %}All Profiles{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>All Profiles</h1>
+</div>
+
+<div class="outfit-grid">
+    {% for profile in profiles %}
+    <div class="outfit-card">
+        {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="outfit-image">
+        {% endif %}
+        <div class="outfit-content">
+            <h3>{{ profile.first_name }} {{ profile.last_name }}</h3>
+            <p>{{ profile.city }}</p>
+            <p>{{ profile.get_outfits.count }} outfits</p>
+            <a href="{{ profile.get_absolute_url }}" class="btn">View Profile</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="card">
+        <p>No profiles available.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 

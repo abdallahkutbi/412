@@ -1,0 +1,64 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Fashion Feed{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Fashion Feed</h1>
+    <p>Discover outfits from you and your friends!</p>
+    
+    {% if outfits %}
+        <div class="feed-container">
+            {% for outfit in outfits %}
+            <div class="outfit-feed-card">
+                <div class="outfit-header">
+                    <h2>{{ outfit.subject }}</h2>
+                    <div class="outfit-meta">
+                        <p><strong>Created by:</strong> 
+                            <a href="{% url 'project:profile_detail' outfit.profile.pk %}">
+                                {{ outfit.profile.first_name }} {{ outfit.profile.last_name }}
+                            </a>
+                        </p>
+                        <p><strong>Posted:</strong> {{ outfit.timestamp|date:"M d, Y" }}</p>
+                        <p><strong>Total Price:</strong> ${{ outfit.total_price }}</p>
+                    </div>
+                </div>
+                
+                <div class="outfit-content">
+                    <h3>Outfit Items:</h3>
+                    {% if outfit.items.all %}
+                        <div class="item-grid">
+                            {% for item in outfit.items.all %}
+                            <div class="item-card">
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-image">
+                                {% endif %}
+                                <h4>{{ item.name }}</h4>
+                                <p><strong>Type:</strong> {{ item.get_item_type_display }}</p>
+                                <p><strong>Price:</strong> ${{ item.price }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No clothing items added to this outfit yet.</p>
+                    {% endif %}
+                </div>
+                
+                <div class="outfit-actions">
+                    <a href="{% url 'project:outfit_detail' outfit.pk %}" class="btn">View Details</a>
+                    {% if user.is_authenticated and user.project_profile != outfit.profile %}
+                        <a href="{% url 'project:add_friend' outfit.profile.pk %}" class="btn btn-secondary">Add {{ outfit.profile.first_name }} as Friend</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No outfits in your feed yet. Start by creating an outfit or adding friends!</p>
+        <div class="btn-group">
+            <a href="{% url 'project:create_outfit' %}" class="btn">Create Your First Outfit</a>
+            <a href="{% url 'project:profile_list' %}" class="btn btn-secondary">Find Friends</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

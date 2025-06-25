@@ -1,0 +1,18 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Login to Community Closet</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{% url 'project:home' %}">
+        <button type="submit" class="btn">Login</button>
+    </form>
+    <p style="margin-top: 20px;">
+        Don't have an account? <a href="{% url 'admin:index' %}">Contact admin</a>
+    </p>
+</div>
+{% endblock %}

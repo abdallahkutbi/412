@@ -1,38 +1,23 @@
 """
-URL configuration for the Mini Facebook application.
-This module defines all the URL patterns for the application, mapping URLs to their
-corresponding view functions and classes.
+URL configuration for mini_fb app.
 """
 
-# mini_fb/urls.py
 from django.urls import path
-from django.contrib.auth import views as auth_views
-from .views import (
-    ShowAllProfilesView, ShowProfilePageView, CreateProfileView, 
-    CreateStatusMessageView, UpdateProfileView, DeleteStatusMessageView, 
-    UpdateStatusMessageView, AddFriendView, ShowFriendSuggestionsView, 
-    ShowNewsFeedView, ShowMyProfileView, LogoutConfirmationView
-)
+from . import views
+
+app_name = 'mini_fb'
 
 urlpatterns = [
-    path('', ShowAllProfilesView.as_view(), name='show_all_profiles'),
-    path('profile/<int:pk>/', ShowProfilePageView.as_view(), name='show_profile'),
-    path('create_profile/', CreateProfileView.as_view(), name='create_profile'),
-
-    path('profile/update/', UpdateProfileView.as_view(), name='update_profile'),
-    path('profile/news_feed/<int:pk>/', ShowNewsFeedView.as_view(), name='news_feed'),
-    path('profile/<int:pk>/add_friend/<int:other_pk>/', AddFriendView.as_view(), name='add_friend'),
-    path('profile/friend_suggestions/<int:pk>/', ShowFriendSuggestionsView.as_view(), name='friend_suggestions'),
-    path('status/create_status/<int:pk>/', CreateStatusMessageView.as_view(), name='create_status'),
-    path('profile/my/', ShowMyProfileView.as_view(), name='my_profile'),
-    path('status/<int:pk>/delete/', DeleteStatusMessageView.as_view(), name='delete_status'),
-    path('status/<int:pk>/update/', UpdateStatusMessageView.as_view(), name='update_status'),
-    path('login/', auth_views.LoginView.as_view(template_name='mini_fb/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(
-        template_name='mini_fb/logged_out.html',
-        next_page='show_all_profiles'
-    ), name='logout'),
-    path('logout_confirmation/', LogoutConfirmationView.as_view(), name='logout_confirmation'),
-    
-
+    path('', views.ShowAllProfilesView.as_view(), name='show_all_profiles'),
+    path('profile/<int:pk>/', views.ShowProfilePageView.as_view(), name='show_profile'),
+    path('create_profile/', views.CreateProfileView.as_view(), name='create_profile'),
+    path('create_status/<int:pk>/', views.CreateStatusMessageView.as_view(), name='create_status'),
+    path('update_profile/', views.UpdateProfileView.as_view(), name='update_profile'),
+    path('delete_status/<int:pk>/', views.DeleteStatusMessageView.as_view(), name='delete_status'),
+    path('update_status/<int:pk>/', views.UpdateStatusMessageView.as_view(), name='update_status'),
+    path('add_friend/<int:pk>/<int:other_pk>/', views.AddFriendView.as_view(), name='add_friend'),
+    path('friend_suggestions/<int:pk>/', views.ShowFriendSuggestionsView.as_view(), name='friend_suggestions'),
+    path('news_feed/<int:pk>/', views.ShowNewsFeedView.as_view(), name='news_feed'),
+    path('my_profile/', views.ShowMyProfileView.as_view(), name='my_profile'),
+    path('logout/', views.LogoutConfirmationView.as_view(), name='logout'),
 ]
