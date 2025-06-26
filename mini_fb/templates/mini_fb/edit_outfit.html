@@ -1,0 +1,36 @@
+{% extends 'project/base.html' %}
+
+{% block title %}Edit Outfit{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Edit Outfit</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.subject.label_tag }} {{ form.subject }}
+        <h3>Select Items for this Outfit:</h3>
+        <div class="item-grid">
+            {% for item in items %}
+                <div class="item-card">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-image">
+                    {% endif %}
+                    <h4>{{ item.name }}</h4>
+                    <p><strong>Type:</strong> {{ item.get_item_type_display }}</p>
+                    <p><strong>Price:</strong> ${{ item.price }}</p>
+                    <p><strong>Brand:</strong> {{ item.brand }}</p>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="items" value="{{ item.id }}"
+                                {% if item in outfit.items.all %}checked{% endif %}>
+                            Add to Outfit
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit">Save Changes</button>
+    </form>
+    <p><a href="{{ outfit.get_absolute_url }}" class="btn btn-secondary">Cancel</a></p>
+</div>
+{% endblock %}

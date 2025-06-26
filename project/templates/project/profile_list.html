@@ -1,29 +1,39 @@
 {% extends 'project/base.html' %}
+{% load static %}
 
-{% block title %}All Profiles{% endblock %}
+{% block title %}Profiles{% endblock %}
 
 {% block content %}
-<div class="card">
-    <h1>All Profiles</h1>
-</div>
-
-<div class="outfit-grid">
+<h1 class="centered-heading">All Profiles</h1>
+<div class="profile-grid">
     {% for profile in profiles %}
-    <div class="outfit-card">
-        {% if profile.profile_image %}
-            <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="outfit-image">
-        {% endif %}
-        <div class="outfit-content">
+        <div class="profile-card">
+            {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="profile-image">
+            {% else %}
+                <img src="{% static 'images/default-profile.png' %}" alt="Default" class="profile-image">
+            {% endif %}
             <h3>{{ profile.first_name }} {{ profile.last_name }}</h3>
             <p>{{ profile.city }}</p>
-            <p>{{ profile.get_outfits.count }} outfits</p>
-            <a href="{{ profile.get_absolute_url }}" class="btn">View Profile</a>
+            <div class="profile-card-actions">
+                <a href="{% url 'project:profile_detail' profile.pk %}" class="btn btn-secondary profile-action-btn">View Profile</a>
+                {% if user.is_authenticated and profile.username != user %}
+                    {% if profile in friends %}
+                        <form method="post" action="{% url 'project:remove_friend' profile.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger profile-action-btn">Remove Friend</button>
+                        </form>
+                    {% else %}
+                        <form method="post" action="{% url 'project:add_friend' profile.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary profile-action-btn">Add Friend</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
-    </div>
     {% empty %}
-    <div class="card">
-        <p>No profiles available.</p>
-    </div>
+        <p>No profiles found.</p>
     {% endfor %}
 </div>
 {% endblock %} 

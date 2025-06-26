@@ -1,4 +1,5 @@
 {% extends 'project/base.html' %}
+{% load static %}
 
 {% block title %}Community Closet - Home{% endblock %}
 
@@ -10,10 +11,10 @@
     {% if user.is_authenticated %}
         <div class="btn-group">
             <a href="{% url 'project:create_outfit' %}" class="btn">Create New Outfit</a>
-            <a href="{% url 'project:news_feed' %}" class="btn">View News Feed</a>
+            <a href="{% url 'project:feed' %}" class="btn">View News Feed</a>
         </div>
     {% else %}
-        <p><a href="{% url 'login' %}" class="btn">Login to Start Sharing</a></p>
+        <p><a href="{% url 'project:login' %}" class="btn">Login to Start Sharing</a></p>
     {% endif %}
 </div>
 

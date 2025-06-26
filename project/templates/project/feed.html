@@ -1,4 +1,5 @@
 {% extends 'project/base.html' %}
+{% load static %}
 
 {% block title %}Fashion Feed{% endblock %}
 
@@ -46,7 +47,7 @@
                 
                 <div class="outfit-actions">
                     <a href="{% url 'project:outfit_detail' outfit.pk %}" class="btn">View Details</a>
-                    {% if user.is_authenticated and user.project_profile != outfit.profile %}
+                    {% if user.is_authenticated and user.project_profile != outfit.profile and outfit.profile not in friends %}
                         <a href="{% url 'project:add_friend' outfit.profile.pk %}" class="btn btn-secondary">Add {{ outfit.profile.first_name }} as Friend</a>
                     {% endif %}
                 </div>

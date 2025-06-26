@@ -1,0 +1,34 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Add a New Clothing Item</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Add Item</button>
+    </form>
+
+    <h3>Your Items</h3>
+    <div class="item-grid">
+        {% for item in items %}
+            <div class="item-card">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-image">
+                {% endif %}
+                <h4>{{ item.name }}</h4>
+                <p><strong>Type:</strong> {{ item.get_item_type_display }}</p>
+                <p><strong>Price:</strong> ${{ item.price }}</p>
+                <p><strong>Brand:</strong> {{ item.brand }}</p>
+                <a href="{% url 'project:edit_item' item.id %}" class="btn btn-secondary">Edit</a>
+                <form action="{% url 'project:delete_item' item.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>No items yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

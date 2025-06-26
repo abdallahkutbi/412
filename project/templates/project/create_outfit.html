@@ -1,28 +1,56 @@
 {% extends 'project/base.html' %}
+{% load static %}
 
 {% block title %}Create New Outfit{% endblock %}
 
 {% block content %}
 <div class="card">
     <h1>Create a New Outfit</h1>
-    
+
+    <!-- Filter form (GET) - OUTSIDE the main form -->
+    <form method="get" id="filterForm" style="margin-bottom: 1em;">
+        <label for="item_type">Filter by type:</label>
+        <select name="item_type" id="item_type" onchange="document.getElementById('filterForm').submit()">
+            <option value="">All</option>
+            {% for value, label in item_types %}
+                <option value="{{ value }}" {% if value == selected_type %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Main create outfit form (POST) -->
     <form method="post">
         {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="id_subject">Outfit Name:</label>
-            {{ form.subject }}
+        <div style="margin-bottom: 1.5em;">
+            {{ form.subject.label_tag }} {{ form.subject }}
         </div>
-        
-        <div class="form-group">
-            <label for="id_items">Select Clothing Items:</label>
-            {{ form.items }}
-            <small>Hold Ctrl/Cmd to select multiple items</small>
+
+        <h3>Select Items for this Outfit:</h3>
+        <div class="item-grid">
+            {% for item in items %}
+                <div class="item-card">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-image">
+                    {% endif %}
+                    <h4>{{ item.name }}</h4>
+                    <p><strong>Type:</strong> {{ item.get_item_type_display }}</p>
+                    <p><strong>Price:</strong> ${{ item.price }}</p>
+                    <p><strong>Brand:</strong> {{ item.brand }}</p>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="items" value="{{ item.id }}">
+                            Add to Outfit
+                        </label>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No items available. <a href="{% url 'project:add_item' %}">Add an item</a> first!</p>
+            {% endfor %}
         </div>
-        
-        <button type="submit" class="btn">Create Outfit</button>
+        <div style="margin-top: 2em; display: flex; gap: 1em;">
+            <a href="{% url 'project:feed' %}" class="btn btn-secondary" style="padding: 10px 24px; border-radius: 25px;">Back to Feed</a>
+            <button type="submit" class="btn btn-primary" style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 10px 24px; border-radius: 25px; font-weight: bold;">Create Outfit</button>
+        </div>
     </form>
-    
-    <p><a href="{% url 'project:home' %}" class="btn btn-secondary">Back to Home</a></p>
 </div>
 {% endblock %}

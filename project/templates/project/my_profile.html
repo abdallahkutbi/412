@@ -1,4 +1,5 @@
 {% extends 'project/base.html' %}
+{% load static %}
 
 {% block title %}My Profile{% endblock %}
 
@@ -17,7 +18,7 @@
             {% if profile.bio %}
                 <p>{{ profile.bio }}</p>
             {% endif %}
-            <a href="#" class="btn">Edit Profile</a>
+            <a href="{% url 'project:edit_profile' %}" class="btn">Edit Profile</a>
         </div>
     </div>
 </div>
@@ -36,6 +37,8 @@
                 <h3>{{ outfit.subject }}</h3>
                 <p><strong>Total: ${{ outfit.total_price }}</strong></p>
                 <a href="{{ outfit.get_absolute_url }}" class="btn">View Details</a>
+                <a href="{% url 'project:edit_outfit' outfit.pk %}" class="btn btn-secondary">Edit Outfit</a>
+                <a href="{% url 'project:delete_outfit' outfit.pk %}" class="btn btn-danger">Delete Outfit</a>
             </div>
         </div>
         {% empty %}

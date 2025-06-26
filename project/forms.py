@@ -4,6 +4,8 @@ This module defines the forms used in the application, including forms for creat
 """
 
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import Profile, Outfit, OutfitItem
 
 class CreateProfileForm(forms.ModelForm):
@@ -27,12 +29,7 @@ class CreateOutfitForm(forms.ModelForm):
     '''
     subject = forms.CharField(label="Outfit Name", required=True, max_length=200, 
                              widget=forms.TextInput(attrs={'placeholder': 'e.g., Summer Casual Look'}))
-    items = forms.ModelMultipleChoiceField(
-        queryset=OutfitItem.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        label="Select Clothing Items",
-        required=True
-    )
+    # items field will be set in the view to filter by user if needed
 
     class Meta:
         model = Outfit
@@ -46,7 +43,18 @@ class CreateOutfitItemForm(forms.ModelForm):
     item_type = forms.ChoiceField(label="Item Type", required=True, choices=OutfitItem.ITEM_TYPES)
     image = forms.ImageField(label="Item Image", required=True)
     price = forms.DecimalField(label="Price ($)", required=True, min_value=0, decimal_places=2)
+    brand = forms.CharField(label="Brand", required=True, max_length=100)
 
     class Meta:
         model = OutfitItem
-        fields = ['name', 'item_type', 'image', 'price']
+        fields = ['name', 'item_type', 'image', 'price', 'brand']
+
+class OutfitForm(forms.ModelForm):
+    class Meta:
+        model = Outfit
+        fields = ['subject']  # or any other fields you want for the outfit
+
+class OutfitItemForm(forms.ModelForm):
+    class Meta:
+        model = OutfitItem
+        fields = ['name', 'item_type', 'image', 'price', 'brand']

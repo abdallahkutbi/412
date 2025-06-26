@@ -166,13 +166,11 @@ class AddFriendView(LoginRequiredMixin, View):
     '''
     View to add a friend relationship
     '''
-    def dispatch(self, request, *args, **kwargs):
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
-        other_profile = Profile.objects.get(pk=self.kwargs['other_pk'])
-        
-        profile.add_friend(other_profile)
-        
-        return redirect('show_profile', pk=profile.pk)
+    def post(self, request, *args, **kwargs):
+        profile = Profile.objects.filter(user=request.user).last()
+        friend_profile = get_object_or_404(Profile, pk=self.kwargs['profile_id'])
+        profile.add_friend(friend_profile)
+        return redirect('project:profile_list')
 
     def get_login_url(self):
         return reverse('login')
