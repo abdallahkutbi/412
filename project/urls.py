@@ -1,7 +1,6 @@
 """
-URL configuration for the Project application.
-This module defines all the URL patterns for the application, mapping URLs to their
-corresponding view functions and classes.
+urls.py
+Defines URL patterns for the Project app, mapping URLs to their corresponding views.
 """
 
 from django.urls import path

@@ -1,3 +1,8 @@
+"""
+views.py
+This file contains all the views for the Project app, including profile, outfit, and friend management.
+"""
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, View, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -18,9 +23,18 @@ from django.views.generic.edit import DeleteView
 from django.contrib.auth.views import LoginView
 
 class ProfileListView(LoginRequiredMixin, ListView):
+    """
+    Displays a list of all profiles except the current user's profile.
+    Redirects to create profile if user is not authenticated.
+    """
     model = Profile
     template_name = 'project/profile_list.html'
     context_object_name = 'profiles'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('project:create_profile')
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         # Exclude the current user's profile if it exists
@@ -55,6 +69,10 @@ class ProfileDetailView(DetailView):
         return context
 
 class CreateProfileView(CreateView):
+    """
+    View to handle creation of a new user profile.
+    Uses CreateProfileForm and UserCreationForm.
+    """
     model = Profile
     form_class = CreateProfileForm
     template_name = 'project/create_profile.html'
@@ -248,6 +266,10 @@ def add_outfit_item(request):
 
 @login_required
 def add_item(request):
+    """
+    Handles the creation of a new outfit item for the logged-in user.
+    Renders the add item form and processes form submissions.
+    """
     if request.method == 'POST':
         form = OutfitItemForm(request.POST, request.FILES)
         if form.is_valid():

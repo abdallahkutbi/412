@@ -1,6 +1,6 @@
 """
-Forms for the Project application.
-This module defines the forms used in the application, including forms for creating profiles and outfits.
+forms.py
+Defines forms for the Project app, including forms for creating profiles, outfits, and outfit items.
 """
 
 from django import forms

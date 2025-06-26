@@ -1,7 +1,6 @@
 """
-Models for the Project application.
-This module defines the database models used in the application, including
-Profile, Outfit, and Friend models.
+models.py
+Defines the database models for the Project app, including Profile, Outfit, Friend, and related models.
 """
 
 from django.db import models
